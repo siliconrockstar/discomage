@@ -174,6 +174,6 @@ MAGES=`printf %q "$MAGES" | sed s/\'//g`;
 OUTPUT+=$MAGES;
 
 
-echo -e $OUTPUT > ./ServerConfigOutput.txt;
+echo -e $OUTPUT > ./discomage.txt;
 
 

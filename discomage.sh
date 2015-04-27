@@ -6,7 +6,7 @@ OUTPUT='';
 PHP_MODS_TO_TEST_FOR=( mysql mcrypt hash xml gd PDO mhash soap apc );
 
 PROCESSES_TO_TEST_FOR=( httpd nginx apache apache2 varnishd 
-	mysql mysqld redis memcache memcached java php5-fpm postfix);
+	mysql mysqld redis redis-server memcache memcached java php5-fpm postfix);
 FOUND_PROCESSES=();
 
 # used to test if apache is installed

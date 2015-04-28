@@ -6,12 +6,21 @@ OUTPUT='';
 PHP_MODS_TO_TEST_FOR=( mysql mcrypt hash xml gd PDO mhash soap apc );
 
 PROCESSES_TO_TEST_FOR=( httpd nginx apache apache2 varnishd 
-	mysql mysqld redis redis-server memcache memcached java php5-fpm postfix);
+	mysql mysqld redis redis-server memcache memcached java 
+	php5-fpm postfix master);
 FOUND_PROCESSES=();
 
 # used to test if apache is installed
 APACHE_PROCESS_NAMES=( apache apache2 httpd );
 
+
+# if not root, print disclaimer
+if [ "$(id -u)" != "0" ]; then
+   OUTPUT+='Run this script as root for best results\n\n';
+fi
+
+# create output dir
+mkdir -p ./DiscomageOutput;
 
 #
 #
@@ -168,12 +177,27 @@ if [[ $HAS_MYSQL == "1" ]]; then
 fi
 
 # See if you can find Magento installs by looking for license
-OUTPUT+='--- Searching for Mage.php files\n';
+OUTPUT+='--- Searching for Mage.php files - very new file may not show if \n
+		locate db has not been updated recently\n';
 MAGES=`locate Mage.php`;
-MAGES=`printf %q "$MAGES" | sed s/\'//g`;
-OUTPUT+=$MAGES;
+MAGESFORMATTED=`printf %q "$MAGES" | sed s/\'//g`;
+OUTPUT+=$MAGESFORMATTED;
+OUTPUT+='\n\n';
+
+# Gather as many local.xml files as you can
+OUTPUT+='Gathering local.xml files and copying to output folder\n\n';
+for P in ${MAGES[@]}
+do
+    P="${P%????????}"; # strip last 8 chars
+	P+='etc/local.xml'; # append local.xml path
+    FILENAME=`echo $P | tr \/ _ `; # create a file name by replaceing / with _
+	FILENAME="${FILENAME#?}"; # trim first _
+	cp $P ./DiscomageOutput/$FILENAME;
+done
+
+OUTPUT+='\n\n------ Complete ------';
 
 
-echo -e $OUTPUT > ./discomage.txt;
+echo -e $OUTPUT > ./DiscomageOutput/ServerProfile.txt;
 
 

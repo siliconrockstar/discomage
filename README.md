@@ -2,7 +2,7 @@
 Small shell script you can run on a server to do basic Magento-related 
 server discovery.
 
-Usage:
+Usage:<br/>
 become root, preferably
 ./discomage.sh
 cd ./DiscomageOutput

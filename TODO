@@ -1,3 +1,5 @@
 Find Mage.php files, but print out magento root instead of Mage.php path
+Check if CDN in use for each Magento site
+  just generally parse Magento config for info, really
 Profile each found Magento site by parsing config files
 Output to HTML to allow linking?

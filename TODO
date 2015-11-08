@@ -1,1 +1,3 @@
-Find Mage.php files but print out magento root instead of Mage.php path
+Find Mage.php files, but print out magento root instead of Mage.php path
+Profile each found Magento site by parsing config files
+Output to HTML to allow linking?
